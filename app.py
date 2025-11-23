@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-import mysql.connector
+import mysql.connector, json
 
 app = Flask(__name__)
 
@@ -31,21 +31,26 @@ def categorias():
     conn.close()
     return jsonify(data)
 
-@app.route('/api/modulos')
+@app.route('/api/modulos', methods=['POST'])
 def modulos():
+    body = request.json
+    id_categoria = body['id_categoria']
     conn = fazer_conexao()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute('SELECT id_modulo, id_categoria, titulo, explicacao FROM categorias')
+    cursor.execute('SELECT id_modulo, titulo, explicacao FROM modulos WHERE id_categoria = %s', (id_categoria,))
     data = cursor.fetchall()
+    for item in data:
+        if isinstance(item['explicacao'], str):
+            item['explicacao'] = json.loads(item['explicacao'])
     cursor.close()
     conn.close()
     return jsonify(data)
 
-@app.route('/api/progresso')
-def progressos():
+@app.route('/api/progressos')
+def progressoss():
     conn = fazer_conexao()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute('SELECT id_usuario, id_modulo, estado FROM categorias')
+    cursor.execute('SELECT id_usuario, id_modulo, estado FROM progressos')
     data = cursor.fetchall()
     cursor.close()
     conn.close()
