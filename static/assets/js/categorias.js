@@ -3,7 +3,6 @@ const categorias = document.querySelector('#categorias');
 async function mostrarCategorias() {
     const res = await fetch('/api/categorias');
     const data = await res.json();
-    console.log(data);
     data.forEach(objeto => {
         let novaCategoria = document.createElement('div');
         let nome = document.createElement('h3');
@@ -16,7 +15,7 @@ async function mostrarCategorias() {
 
         botao.addEventListener('click', () => {
             localStorage.setItem('categoriaEscolhida', objeto.id_categoria);
-            window.location.assign("/static/modulos.html")
+            window.location.href = "/static/modulos.html"
         })
 
         novaCategoria.appendChild(nome);
