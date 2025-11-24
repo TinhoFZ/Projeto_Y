@@ -1,6 +1,6 @@
 Dentro do projeto:
 
-> py -3 -m venv .venv
+> py -m venv .venv
 > .venv\Scripts\activate
 > pip install Flask; mysql-connector-python; flask-bcrypt
 > py app.py

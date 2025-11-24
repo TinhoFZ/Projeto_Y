@@ -15,11 +15,24 @@ def fazer_conexao():
 def usuarios():
     conn = fazer_conexao()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute('SELECT id_usuario, nome, senha FROM usuarios')
+    cursor.execute('SELECT id_usuario, email, senha FROM usuarios')
     data = cursor.fetchall()
     cursor.close()
     conn.close()
     return jsonify(data)
+
+@app.route('/api/cadastro', methods=['POST'])
+def cadastro():
+    body = request.json
+    email = body['email']
+    senha = body['senha']
+    conn = fazer_conexao()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute('INSERT INTO usuarios (email, senha) VALUES (%s, %s)', (email, senha))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return jsonify({'status': 'ok'})
 
 @app.route('/api/categorias')
 def categorias():

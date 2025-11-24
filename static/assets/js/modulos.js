@@ -1,5 +1,5 @@
 const modulos = document.querySelector('#modulos');
-const botaoVoltar = document.querySelector('#botao-voltar');
+const buttonVoltar = document.querySelector('#button-voltar');
 
 const categoriaEscolhida = localStorage.getItem('categoriaEscolhida');
 
@@ -34,7 +34,7 @@ async function mostrarModulos() {
     });
 }
 
-botaoVoltar.addEventListener('click', () => {
+buttonVoltar.addEventListener('click', () => {
     window.location.href = "..";
 })
 
