@@ -1,5 +1,5 @@
 const informacoes = document.querySelector('#informacoes');
-const buttonVoltar = document.querySelector('#button=-voltar');
+const buttonVoltar = document.querySelector('#button-voltar');
 
 const categoriaEscolhida = localStorage.getItem('categoriaEscolhida');
 const moduloEscolhido = localStorage.getItem('moduloEscolhido');

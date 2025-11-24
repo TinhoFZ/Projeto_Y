@@ -1,3 +1,6 @@
+const buttonCadastro = document.querySelector('#button-cadastro');
+const buttonLogin = document.querySelector('#button-login');
+
 const categorias = document.querySelector('#categorias');
 
 async function mostrarCategorias() {
@@ -25,5 +28,8 @@ async function mostrarCategorias() {
         categorias.appendChild(novaCategoria); 
     });
 }
+
+buttonCadastro.addEventListener('click', () => window.location.href = "static/cadastro.html");
+buttonLogin.addEventListener('click', () => window.location.href = "static/login.html");
 
 mostrarCategorias();
