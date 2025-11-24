@@ -104,6 +104,20 @@ def progressoss():
     conn.close()
     return jsonify(data)
 
+@app.route('/api/marcar_progresso', methods=['POST'])
+def marcar_progresso():
+    body = request.json
+    id_usuario = body['id_usuario']
+    id_modulo = body['id_modulo']
+    estado = body['estado']
+    conn = fazer_conexao()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute('CALL MarcarProgresso(%s, %s, %s)', (id_usuario, id_modulo, estado))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return jsonify({'status:': 'ok'})
+
 @app.route('/')
 def serve_frontend():
     return app.send_static_file('index.html')

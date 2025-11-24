@@ -1,5 +1,6 @@
 const buttonCadastro = document.querySelector('#button-cadastro');
 const buttonLogin = document.querySelector('#button-login');
+const buttonDeslogar = document.querySelector('#button-deslogar');
 
 const categorias = document.querySelector('#categorias');
 
@@ -29,7 +30,28 @@ async function mostrarCategorias() {
     });
 }
 
+async function checarLogin() {
+    const res = await fetch('/api/eu');
+    const data = await res.json();
+    if(data.logado) {
+        buttonCadastro.classList.add('hidden');
+        buttonLogin.classList.add('hidden');
+        buttonDeslogar.classList.remove('hidden');
+    } else {
+                buttonCadastro.classList.remove('hidden');
+        buttonLogin.classList.remove('hidden');
+        buttonDeslogar.classList.add('hidden');
+    }
+}
+
+async function deslogar() {
+    await fetch('/api/deslogar');
+    checarLogin();
+}
+
 buttonCadastro.addEventListener('click', () => window.location.href = "static/cadastro.html");
 buttonLogin.addEventListener('click', () => window.location.href = "static/login.html");
+buttonDeslogar.addEventListener('click', () => deslogar())
 
+checarLogin();
 mostrarCategorias();

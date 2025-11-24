@@ -32,6 +32,31 @@ CREATE TABLE progressos(
     FOREIGN KEY (id_modulo) REFERENCES modulos (id_modulo)
 );
 
+DELIMITER $$
+CREATE PROCEDURE MarcarProgresso(
+    IN p_usuario INT,
+    IN p_modulo INT,
+    IN p_estado_novo ENUM('nao_iniciado','em_progresso','completo')
+)
+BEGIN
+    DECLARE v_count INT DEFAULT 0;
+
+    SELECT COUNT(*) INTO v_count
+    FROM progressos
+    WHERE id_usuario = p_usuario AND id_modulo = p_modulo;
+
+    IF v_count = 0 THEN
+        INSERT INTO progressos (id_usuario, id_modulo, estado)
+        VALUES (p_usuario, p_modulo, p_estado_novo);
+    ELSE
+        UPDATE progressos
+        SET estado = p_estado_novo
+        WHERE id_usuario = p_usuario AND id_modulo = p_modulo;
+    END IF;
+END $$
+DELIMITER ;
+
+
 INSERT INTO usuarios (email, senha) VALUES
 ("edupassosa18@gmail.com", "123");
 
