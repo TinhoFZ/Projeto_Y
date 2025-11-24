@@ -1,7 +1,8 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, session
 import mysql.connector, json
 
 app = Flask(__name__)
+app.secret_key = "chave_secretaz"
 
 def fazer_conexao():
     return mysql.connector.connect(
@@ -32,6 +33,40 @@ def cadastro():
     conn.commit()
     cursor.close()
     conn.close()
+    return jsonify({'status': 'ok'})
+
+@app.route('/api/login', methods=['POST'])
+def login():
+    data = request.json
+    email = data['email']
+    senha = data['senha']
+    conn = fazer_conexao()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM usuarios WHERE email=%s AND senha=%s", (email, senha))
+    usuario = cursor.fetchone()
+    
+    if not usuario:
+        return jsonify({'status': 'erro'}), 401
+
+    session['id_usuario'] = usuario['id_usuario']
+    session['email'] = usuario['email']
+
+    return jsonify({'status': 'ok'})
+
+@app.route('/api/eu')
+def eu():
+    if 'id_usuario' not in session:
+        return jsonify({'logado': False}), 401
+    else:
+        return jsonify({
+            'logado': True,
+            'id': session['id_usuario'],
+            'email': session['email']
+        })
+
+@app.route('/api/deslogar')
+def deslogar():
+    session.clear()
     return jsonify({'status': 'ok'})
 
 @app.route('/api/categorias')
