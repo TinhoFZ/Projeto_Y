@@ -14,7 +14,7 @@ Coloque o código em uma pasta;
 
 Dentro da pasta do projeto:
 
-> py -m venv .venv
-> .venv\Scripts\activate
-> pip install Flask; mysql-connector-python; flask-bcrypt
-> py app.py
+py -m venv .venv
+.venv\Scripts\activate
+pip install Flask; mysql-connector-python; flask-bcrypt
+py app.py
