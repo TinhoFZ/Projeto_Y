@@ -56,6 +56,7 @@ async function mostrarModulo() {
 function criarProgresso() {
     let range = document.createElement('input');
     let botao = document.createElement('botao');
+    let label = document.createElement('label');
     let div = document.createElement('div');
 
     range.type = "range", range.id = "range-progresso", range.min = 1, range.max = 3, range.step = 1;
@@ -65,6 +66,10 @@ function criarProgresso() {
         modificarProgresso();
     })
 
+    label.innerText = "Escolhe entre: incompleto | em progresso | completo";
+    label.htmlFor = "range-progresso";
+    
+    div.appendChild(label);
     div.appendChild(range);
     div.appendChild(botao);
 

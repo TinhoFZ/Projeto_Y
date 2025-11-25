@@ -19,23 +19,28 @@ async function mostrarModulos() {
         let titulo = document.createElement('h3');
         let botao = document.createElement('button');
 
+        // Classes existentes no seu CSS
+        novaCategoria.classList.add('card'); 
+        titulo.classList.add('modulo-titulo'); 
+        botao.classList.add('modulo-botao'); 
+
         titulo.innerText = objeto.titulo;
         botao.innerText = "Ver";
 
         botao.addEventListener('click', () => {
             localStorage.setItem('moduloEscolhido', objeto.id_modulo);
             window.location.href = "moduloEscolhido.html";
-        })
+        });
 
         novaCategoria.appendChild(titulo);
         novaCategoria.appendChild(botao);
-        
-        modulos.appendChild(novaCategoria); 
+
+        modulos.appendChild(novaCategoria);
     });
 }
 
 buttonVoltar.addEventListener('click', () => {
     window.location.href = "..";
-})
+});
 
 mostrarModulos();
